@@ -1,5 +1,7 @@
 var http = require('http');
 
+var wooly = require('./lib/js/wooly_head')
+
 var nodeStatic = require('node-static');
 var staticServer = new(nodeStatic.Server)('./public');
 
@@ -25,5 +27,9 @@ io.sockets.on('connection', function(socket) {
 		socket.emit('player_login', {username: data['username']})
 	});
 });
+
+var p = new wooly.Player('tliff');
+var l = new wooly.Lobby();
+
 
 server.listen(8000);
