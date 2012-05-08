@@ -1,0 +1,17 @@
+Server to Client:
+ - table_add {name: string}
+ - table_list {[{name: string}]}
+ - table_remove {name: string}
+ - table_message{player: string, table: sting, message: string}
+ - table_join {success: boolean, reason: string, table: string}
+ - table_quit {success: boolean, reason: string, table: string}
+ - player_add {name: string}
+ - player_list {[{name: string}]}
+ - player_remove {name: string}
+ - player_login {success: boolean, reason:string}
+ - lobby_message {player: string, message:string}
+ - server_message {message: string}
+ 
+Client to Server:
+ - player_login {name: string}
+ 

@@ -21,15 +21,32 @@ var server = http.createServer(function(req, res) {
 	});
 });
 
+
+var l = new wooly.Lobby();
+
+
 io.sockets.on('connection', function(socket) {
+
 	socket.on('login', function(data) {
-		console.log("Player logging in, name is" + data['username']);
-		socket.emit('player_login', {username: data['username']})
+		var player = new wooly.Player(socket, data['username'])
+		socket.set('player', player);
+		l.addPlayer(player);
 	});
+
+	socket.on('chatmessage', function(data) {
+		socket.get('player', function(err, player) {
+			l.sendChatMessage(player, data['message'])
+		});
+	});
+
+	socket.on('disconnect', function(data) {
+		socket.get('player', function(err, player) {
+			l.removePlayer(player);
+		});
+	});
+	
 });
 
-var p = new wooly.Player('tliff');
-var l = new wooly.Lobby();
 
 
 server.listen(8000);
